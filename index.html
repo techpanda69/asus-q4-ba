@@ -847,81 +847,91 @@
        BRACKET ROUND
     ===================================================== */
 
-    function renderBracketRound(
-      title,
-      rows
-    ) {
+   function renderBracketRound(title, rows) {
 
-      if (!rows.length) {
-        return "";
-      }
+  if (!rows.length) {
+    return "";
+  }
 
+  let html = `
+    <section class="round">
 
-      let html = `
-        <section class="round">
+      <h2>
+        ${escapeHTML(title)}
+      </h2>
 
-          <h2>
-            ${escapeHTML(title)}
-          </h2>
+      <div class="match-grid">
+  `;
 
-          <div class="match-grid">
-      `;
+  rows.forEach(row => {
 
+    const match = row[0] || "";
+    const p1 = row[1] || "";
+    const p2 = row[2] || "";
 
-      rows.forEach(row => {
+    // Win column from Google Sheet
+    const winner = String(row[3] || "").trim();
 
-        /*
-          IMPORTANT:
+    const p1IsWinner =
+      p1.trim() !== "" &&
+      winner.toLowerCase() === p1.trim().toLowerCase();
 
-          We only display P1 and P2.
-
-          We DO NOT determine winner
-          from Win/Loss.
-
-          Sheet remains source of truth.
-        */
-
-        const match =
-          row[0] || "";
-
-        const p1 =
-          row[1] || "";
-
-        const p2 =
-          row[2] || "";
+    const p2IsWinner =
+      p2.trim() !== "" &&
+      winner.toLowerCase() === p2.trim().toLowerCase();
 
 
-        html += `
-          <div class="match-card">
+    html += `
+      <div class="match-card">
 
-            <div class="match-title">
-              ${escapeHTML(match)}
-            </div>
-
-            <div class="player">
-              ${escapeHTML(p1)}
-            </div>
-
-            <div class="player">
-              ${escapeHTML(p2)}
-            </div>
-
-          </div>
-        `;
-
-      });
+        <div class="match-title">
+          ${escapeHTML(match)}
+        </div>
 
 
-      html += `
-          </div>
+        <div class="player ${p1IsWinner ? "winner" : ""}">
 
-        </section>
-      `;
+          <span>
+            ${escapeHTML(p1)}
+          </span>
+
+          ${
+            p1IsWinner
+              ? `<span class="winner-pill">WINNER</span>`
+              : ""
+          }
+
+        </div>
 
 
-      return html;
+        <div class="player ${p2IsWinner ? "winner" : ""}">
 
-    }
+          <span>
+            ${escapeHTML(p2)}
+          </span>
+
+          ${
+            p2IsWinner
+              ? `<span class="winner-pill">WINNER</span>`
+              : ""
+          }
+
+        </div>
+
+      </div>
+    `;
+
+  });
+
+
+  html += `
+      </div>
+
+    </section>
+  `;
+
+  return html;
+}
 
 
     /* =====================================================
