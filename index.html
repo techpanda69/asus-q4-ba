@@ -2,18 +2,12 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>ASUS BA Q4 — Leaderboard</title>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -22,11 +16,7 @@
       margin: 0;
       background: #09090b;
       color: #ffffff;
-      font-family:
-        Inter,
-        Arial,
-        Helvetica,
-        sans-serif;
+      font-family: Inter, Arial, Helvetica, sans-serif;
     }
 
     .container {
@@ -34,8 +24,6 @@
       margin: auto;
       padding: 30px 18px 60px;
     }
-
-    /* HEADER */
 
     .header {
       display: flex;
@@ -63,24 +51,18 @@
       text-align: right;
     }
 
-    /* CONTROLS */
-
     .controls {
-      margin-bottom: 18px;
+      margin-bottom: 24px;
     }
 
     select {
       background: #151518;
       color: white;
-
       border: 1px solid #2b2b30;
       border-radius: 8px;
-
       padding: 12px 15px;
-
       font-size: 14px;
       min-width: 220px;
-
       outline: none;
     }
 
@@ -88,41 +70,33 @@
       border-color: #555;
     }
 
-    /* TABLE */
+    /* NORMAL TABLE */
 
     .table-wrapper {
       overflow-x: auto;
-
       border: 1px solid #26262b;
       border-radius: 12px;
-
       background: #111114;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-
       min-width: 650px;
     }
 
     th {
       padding: 15px;
-
       text-align: left;
-
       color: #777;
       font-size: 12px;
       font-weight: 600;
-
       border-bottom: 1px solid #29292e;
     }
 
     td {
       padding: 16px 15px;
-
       font-size: 14px;
-
       border-bottom: 1px solid #202024;
     }
 
@@ -134,28 +108,92 @@
       font-weight: 800;
     }
 
-    /* LOADING */
+    /* BRACKET */
+
+    .bracket {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .round {
+      border: 1px solid #26262b;
+      border-radius: 12px;
+      background: #111114;
+      overflow: hidden;
+    }
+
+    .round-title {
+      padding: 14px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #aaa;
+      border-bottom: 1px solid #29292e;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .match {
+      display: grid;
+      grid-template-columns: 100px 1fr 1fr 90px 90px;
+      align-items: center;
+      min-height: 58px;
+      border-bottom: 1px solid #202024;
+    }
+
+    .match:last-child {
+      border-bottom: none;
+    }
+
+    .match > div {
+      padding: 14px 12px;
+      font-size: 14px;
+    }
+
+    .match-name {
+      color: #777;
+      font-weight: 700;
+    }
+
+    .player {
+      font-weight: 600;
+    }
+
+    .result {
+      color: #aaa;
+      text-align: center;
+    }
+
+    .result.win {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .result.loss {
+      color: #666;
+    }
+
+    .final {
+      border-color: #444;
+    }
+
+    .final .round-title {
+      color: #fff;
+    }
 
     .loading {
       padding: 60px 20px;
       text-align: center;
-
       color: #777;
     }
 
-    /* ERROR */
-
     .error {
       padding: 40px 20px;
-
       text-align: center;
-
       color: #ff6b6b;
     }
 
-    /* MOBILE */
-
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
 
       .container {
         padding: 20px 10px 40px;
@@ -178,12 +216,21 @@
         width: 100%;
       }
 
+      .match {
+        grid-template-columns: 70px 1fr 1fr 60px 60px;
+      }
+
+      .match > div {
+        padding: 12px 8px;
+        font-size: 12px;
+      }
+
+      .round-title {
+        font-size: 12px;
+      }
     }
-
   </style>
-
 </head>
-
 
 <body>
 
@@ -192,33 +239,21 @@
     <div class="header">
 
       <div>
-
-        <div class="title">
-          ASUS BA Q4
-        </div>
-
+        <div class="title">ASUS BA Q4</div>
         <div class="subtitle">
           Live Competition Leaderboard
         </div>
-
       </div>
 
-      <div
-        class="status"
-        id="status"
-      >
+      <div class="status" id="status">
         Loading...
       </div>
 
     </div>
 
-
     <div class="controls">
 
-      <select
-        id="gameSelect"
-        onchange="changeGame()"
-      >
+      <select id="gameSelect" onchange="changeGame()">
 
         <option value="overall">
           Overall
@@ -248,7 +283,6 @@
 
     </div>
 
-
     <div id="content">
 
       <div class="loading">
@@ -267,6 +301,10 @@ let leaderboard = {};
 let currentGame = "overall";
 
 
+/* =========================
+   LOAD DATA
+========================= */
+
 async function loadLeaderboard() {
 
   try {
@@ -274,22 +312,17 @@ async function loadLeaderboard() {
     document.getElementById("status").innerText =
       "Updating...";
 
-
     const response =
       await fetch("/api/leaderboard");
-
 
     if (!response.ok) {
       throw new Error("API error");
     }
 
-
     leaderboard =
       await response.json();
 
-
     render();
-
 
     document.getElementById("status").innerText =
       "Updated " +
@@ -298,8 +331,9 @@ async function loadLeaderboard() {
         minute: "2-digit"
       });
 
+  }
 
-  } catch (error) {
+  catch (error) {
 
     console.error(error);
 
@@ -311,11 +345,14 @@ async function loadLeaderboard() {
 
     document.getElementById("status").innerText =
       "Connection error";
-
   }
 
 }
 
+
+/* =========================
+   CHANGE GAME
+========================= */
 
 function changeGame() {
 
@@ -327,11 +364,14 @@ function changeGame() {
 }
 
 
+/* =========================
+   MAIN RENDER
+========================= */
+
 function render() {
 
   const data =
     leaderboard[currentGame];
-
 
   if (!data || data.length === 0) {
 
@@ -342,14 +382,40 @@ function render() {
     `;
 
     return;
-
   }
 
 
   /*
-    Find the first row containing
-    actual column headings.
+    RL + Brawlhalla
+    use bracket renderer
   */
+
+  if (
+    currentGame === "Rocket League" ||
+    currentGame === "Brawlhalla"
+  ) {
+
+    renderBracket(data);
+
+    return;
+  }
+
+
+  /*
+    Everything else:
+    normal leaderboard
+  */
+
+  renderTable(data);
+
+}
+
+
+/* =========================
+   NORMAL TABLE
+========================= */
+
+function renderTable(data) {
 
   let headerIndex = -1;
 
@@ -360,8 +426,13 @@ function render() {
     i++
   ) {
 
-    const row = data[i]
-      .map(x => String(x).trim().toLowerCase());
+    const row =
+      data[i]
+        .map(x =>
+          String(x)
+            .trim()
+            .toLowerCase()
+        );
 
 
     if (
@@ -374,7 +445,6 @@ function render() {
       headerIndex = i;
 
       break;
-
     }
 
   }
@@ -389,7 +459,6 @@ function render() {
     `;
 
     return;
-
   }
 
 
@@ -437,11 +506,13 @@ function render() {
 
 
   html += `
+
           </tr>
 
         </thead>
 
         <tbody>
+
   `;
 
 
@@ -464,9 +535,11 @@ function render() {
 
 
       html += `
+
         <td>
           ${escapeHtml(row[i] ?? "")}
         </td>
+
       `;
 
     }
@@ -488,30 +561,330 @@ function render() {
   `;
 
 
-  document.getElementById("content").innerHTML =
-    html;
+  document.getElementById("content")
+    .innerHTML = html;
 
 }
 
+
+/* =========================
+   BRACKET RENDERER
+========================= */
+
+function renderBracket(data) {
+
+  /*
+    Expected structure:
+
+    Match | P1 | P2 | Win | Loss
+
+    QF1
+    QF2
+    QF3
+    QF4
+    SF1
+    SF2
+    FINALE 1
+    FINALE 2
+    FINALE 3
+  */
+
+
+  let headerIndex = -1;
+
+
+  for (
+    let i = 0;
+    i < data.length;
+    i++
+  ) {
+
+    const row =
+      data[i]
+        .map(x =>
+          String(x)
+            .trim()
+            .toLowerCase()
+        );
+
+
+    if (
+      row.includes("match") &&
+      row.includes("p1") &&
+      row.includes("p2")
+    ) {
+
+      headerIndex = i;
+
+      break;
+    }
+
+  }
+
+
+  if (headerIndex === -1) {
+
+    document.getElementById("content").innerHTML = `
+      <div class="error">
+        Could not detect bracket headers.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  const headers =
+    data[headerIndex];
+
+
+  const matchIndex =
+    headers.findIndex(
+      h =>
+        String(h)
+          .trim()
+          .toLowerCase() === "match"
+    );
+
+
+  const p1Index =
+    headers.findIndex(
+      h =>
+        String(h)
+          .trim()
+          .toLowerCase() === "p1"
+    );
+
+
+  const p2Index =
+    headers.findIndex(
+      h =>
+        String(h)
+          .trim()
+          .toLowerCase() === "p2"
+    );
+
+
+  const winIndex =
+    headers.findIndex(
+      h =>
+        String(h)
+          .trim()
+          .toLowerCase() === "win"
+    );
+
+
+  const lossIndex =
+    headers.findIndex(
+      h =>
+        String(h)
+          .trim()
+          .toLowerCase() === "loss"
+    );
+
+
+  const matches =
+    data
+      .slice(headerIndex + 1)
+      .filter(row =>
+        row.some(cell =>
+          String(cell).trim() !== ""
+        )
+      );
+
+
+  const quarterFinals =
+    matches.filter(row =>
+      /^QF/i.test(
+        String(row[matchIndex] ?? "")
+      )
+    );
+
+
+  const semiFinals =
+    matches.filter(row =>
+      /^SF/i.test(
+        String(row[matchIndex] ?? "")
+      )
+    );
+
+
+  const finals =
+    matches.filter(row =>
+      /^FINALE/i.test(
+        String(row[matchIndex] ?? "")
+      )
+    );
+
+
+  let html = `
+    <div class="bracket">
+  `;
+
+
+  if (quarterFinals.length) {
+
+    html += renderRound(
+      "Quarter Finals",
+      quarterFinals
+    );
+
+  }
+
+
+  if (semiFinals.length) {
+
+    html += renderRound(
+      "Semi Finals",
+      semiFinals
+    );
+
+  }
+
+
+  if (finals.length) {
+
+    html += renderRound(
+      "Final — Best of 3",
+      finals,
+      true
+    );
+
+  }
+
+
+  html += `
+    </div>
+  `;
+
+
+  document.getElementById("content")
+    .innerHTML = html;
+
+
+  function renderRound(
+    title,
+    rows,
+    isFinal = false
+  ) {
+
+    let output = `
+
+      <div class="round ${isFinal ? "final" : ""}">
+
+        <div class="round-title">
+          ${title}
+        </div>
+    `;
+
+
+    rows.forEach(row => {
+
+      const match =
+        row[matchIndex] ?? "";
+
+      const p1 =
+        row[p1Index] ?? "";
+
+      const p2 =
+        row[p2Index] ?? "";
+
+      const win =
+        row[winIndex] ?? "";
+
+      const loss =
+        row[lossIndex] ?? "";
+
+
+      output += `
+
+        <div class="match">
+
+          <div class="match-name">
+            ${escapeHtml(match)}
+          </div>
+
+          <div class="player">
+            ${escapeHtml(p1)}
+          </div>
+
+          <div class="player">
+            ${escapeHtml(p2)}
+          </div>
+
+          <div class="result win">
+            ${escapeHtml(win)}
+          </div>
+
+          <div class="result loss">
+            ${escapeHtml(loss)}
+          </div>
+
+        </div>
+
+      `;
+
+    });
+
+
+    output += `
+      </div>
+    `;
+
+
+    return output;
+
+  }
+
+}
+
+
+/* =========================
+   SECURITY
+========================= */
 
 function escapeHtml(value) {
 
   return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
 
-/* Initial load */
+/* =========================
+   START
+========================= */
 
 loadLeaderboard();
 
 
-/* Refresh every 30 seconds */
+/*
+  Refresh every 30 seconds
+*/
 
 setInterval(
   loadLeaderboard,
