@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
-  <title>ASUS BA Q4 — Leaderboard</title>
+  <title>ASUS BA Q4</title>
 
   <style>
     * {
@@ -15,68 +17,98 @@
     body {
       margin: 0;
       background: #09090b;
-      color: #ffffff;
-      font-family: Inter, Arial, Helvetica, sans-serif;
+      color: #f4f4f5;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     .container {
+      width: 100%;
       max-width: 1200px;
-      margin: auto;
-      padding: 30px 18px 60px;
+      margin: 0 auto;
+      padding: 24px 16px 50px;
     }
 
-    .header {
+    /* HEADER */
+
+    header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-end;
+      align-items: center;
       gap: 20px;
-      margin-bottom: 30px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
     }
 
-    .title {
-      font-size: 32px;
+    .brand h1 {
+      margin: 0;
+      font-size: 28px;
       font-weight: 800;
-      letter-spacing: -1px;
+      letter-spacing: -0.5px;
     }
 
-    .subtitle {
-      margin-top: 6px;
-      color: #888;
+    .brand p {
+      margin: 5px 0 0;
+      color: #a1a1aa;
       font-size: 14px;
     }
 
     .status {
-      color: #777;
-      font-size: 12px;
+      color: #a1a1aa;
+      font-size: 13px;
       text-align: right;
     }
 
+    /* CONTROLS */
+
     .controls {
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
 
     select {
-      background: #151518;
-      color: white;
-      border: 1px solid #2b2b30;
+      width: 100%;
+      max-width: 320px;
+      background: #18181b;
+      color: #f4f4f5;
+      border: 1px solid #3f3f46;
       border-radius: 8px;
-      padding: 12px 15px;
-      font-size: 14px;
-      min-width: 220px;
+      padding: 12px 14px;
+      font-size: 15px;
       outline: none;
+      cursor: pointer;
     }
 
     select:focus {
-      border-color: #555;
+      border-color: #71717a;
     }
 
-    /* NORMAL TABLE */
+    /* CONTENT */
 
-    .table-wrapper {
+    #content {
+      width: 100%;
+    }
+
+    .loading,
+    .error {
+      padding: 40px 20px;
+      text-align: center;
+      color: #a1a1aa;
+      background: #111113;
+      border: 1px solid #27272a;
+      border-radius: 10px;
+    }
+
+    .error {
+      color: #f87171;
+    }
+
+    /* TABLE */
+
+    .table-wrap {
+      width: 100%;
       overflow-x: auto;
-      border: 1px solid #26262b;
-      border-radius: 12px;
-      background: #111114;
+      border: 1px solid #27272a;
+      border-radius: 10px;
+      background: #111113;
     }
 
     table {
@@ -86,147 +118,123 @@
     }
 
     th {
-      padding: 15px;
-      text-align: left;
-      color: #777;
+      background: #18181b;
+      color: #d4d4d8;
       font-size: 12px;
-      font-weight: 600;
-      border-bottom: 1px solid #29292e;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 14px 12px;
+      text-align: left;
+      border-bottom: 1px solid #27272a;
+      white-space: nowrap;
     }
 
     td {
-      padding: 16px 15px;
+      padding: 14px 12px;
+      border-bottom: 1px solid #27272a;
+      color: #f4f4f5;
       font-size: 14px;
-      border-bottom: 1px solid #202024;
+      white-space: nowrap;
     }
 
     tr:last-child td {
       border-bottom: none;
     }
 
-    td:first-child {
-      font-weight: 800;
+    tbody tr:hover {
+      background: #18181b;
     }
 
-    /* BRACKET */
+    /* BRACKETS */
 
     .bracket {
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 32px;
     }
 
     .round {
-      border: 1px solid #26262b;
-      border-radius: 12px;
-      background: #111114;
+      width: 100%;
+    }
+
+    .round h2 {
+      margin: 0 0 14px;
+      font-size: 17px;
+      color: #f4f4f5;
+    }
+
+    .match-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      gap: 14px;
+    }
+
+    .match-card {
+      background: #111113;
+      border: 1px solid #27272a;
+      border-radius: 10px;
       overflow: hidden;
     }
 
-    .round-title {
-      padding: 14px 16px;
-      font-size: 13px;
+    .match-title {
+      padding: 10px 12px;
+      background: #18181b;
+      color: #a1a1aa;
+      font-size: 12px;
       font-weight: 700;
-      color: #aaa;
-      border-bottom: 1px solid #29292e;
       text-transform: uppercase;
-      letter-spacing: .5px;
-    }
-
-    .match {
-      display: grid;
-      grid-template-columns: 100px 1fr 1fr 90px 90px;
-      align-items: center;
-      min-height: 58px;
-      border-bottom: 1px solid #202024;
-    }
-
-    .match:last-child {
-      border-bottom: none;
-    }
-
-    .match > div {
-      padding: 14px 12px;
-      font-size: 14px;
-    }
-
-    .match-name {
-      color: #777;
-      font-weight: 700;
+      border-bottom: 1px solid #27272a;
     }
 
     .player {
-      font-weight: 600;
+      padding: 13px 12px;
+      font-size: 14px;
+      border-bottom: 1px solid #27272a;
+      min-height: 45px;
+      display: flex;
+      align-items: center;
     }
 
-    .result {
-      color: #aaa;
-      text-align: center;
+    .player:last-child {
+      border-bottom: none;
     }
 
-    .result.win {
-      color: #fff;
-      font-weight: 700;
-    }
+    /* MOBILE */
 
-    .result.loss {
-      color: #666;
-    }
-
-    .final {
-      border-color: #444;
-    }
-
-    .final .round-title {
-      color: #fff;
-    }
-
-    .loading {
-      padding: 60px 20px;
-      text-align: center;
-      color: #777;
-    }
-
-    .error {
-      padding: 40px 20px;
-      text-align: center;
-      color: #ff6b6b;
-    }
-
-    @media (max-width: 700px) {
-
+    @media (max-width: 800px) {
       .container {
-        padding: 20px 10px 40px;
+        padding: 18px 12px 40px;
       }
 
-      .header {
+      header {
         align-items: flex-start;
-        flex-direction: column;
       }
 
-      .title {
-        font-size: 25px;
+      .brand h1 {
+        font-size: 24px;
       }
 
       .status {
         text-align: left;
       }
 
+      .match-grid {
+        grid-template-columns: repeat(2, minmax(160px, 1fr));
+      }
+    }
+
+    @media (max-width: 520px) {
+      .match-grid {
+        grid-template-columns: 1fr;
+      }
+
       select {
-        width: 100%;
+        max-width: 100%;
       }
 
-      .match {
-        grid-template-columns: 70px 1fr 1fr 60px 60px;
-      }
-
-      .match > div {
-        padding: 12px 8px;
-        font-size: 12px;
-      }
-
-      .round-title {
-        font-size: 12px;
+      table {
+        min-width: 600px;
       }
     }
   </style>
@@ -236,664 +244,738 @@
 
   <div class="container">
 
-    <div class="header">
+    <!-- HEADER -->
 
-      <div>
-        <div class="title">ASUS BA Q4</div>
-        <div class="subtitle">
-          Live Competition Leaderboard
-        </div>
+    <header>
+      <div class="brand">
+        <h1>ASUS BA Q4</h1>
+        <p>Live Competition Leaderboard</p>
       </div>
 
       <div class="status" id="status">
         Loading...
       </div>
+    </header>
 
-    </div>
+
+    <!-- GAME SELECTOR -->
 
     <div class="controls">
-
-      <select id="gameSelect" onchange="changeGame()">
-
-        <option value="overall">
-          Overall
-        </option>
-
-        <option value="Valorant">
-          Valorant
-        </option>
-
-        <option value="Rocket League">
-          Rocket League
-        </option>
-
-        <option value="PolyTrack">
-          PolyTrack
-        </option>
-
-        <option value="Stumble Guys">
-          Stumble Guys
-        </option>
-
-        <option value="Brawlhalla">
-          Brawlhalla
-        </option>
-
+      <select id="gameSelect">
+        <option value="overall">Overall</option>
+        <option value="Valorant">Valorant</option>
+        <option value="Rocket League">Rocket League</option>
+        <option value="PolyTrack">PolyTrack</option>
+        <option value="Stumble Guys">Stumble Guys</option>
+        <option value="Brawlhalla">Brawlhalla</option>
       </select>
-
     </div>
 
-    <div id="content">
 
+    <!-- CONTENT -->
+
+    <div id="content">
       <div class="loading">
         Loading leaderboard...
       </div>
-
     </div>
 
   </div>
 
 
-<script>
+  <script>
 
-let leaderboard = {};
+    /* =====================================================
+       CONFIG
+    ===================================================== */
 
-let currentGame = "overall";
+    const API_URL = "/api/leaderboard";
 
+    let leaderboardData = {};
 
-/* =========================
-   LOAD DATA
-========================= */
+    let currentView = "overall";
 
-async function loadLeaderboard() {
 
-  try {
+    /* =====================================================
+       LOAD DATA
+    ===================================================== */
 
-    document.getElementById("status").innerText =
-      "Updating...";
+    async function loadLeaderboard() {
 
-    const response =
-      await fetch("/api/leaderboard");
+      try {
 
-    if (!response.ok) {
-      throw new Error("API error");
-    }
+        setStatus("Updating...");
 
-    leaderboard =
-      await response.json();
 
-    render();
+        const response = await fetch(API_URL, {
+          cache: "no-store"
+        });
 
-    document.getElementById("status").innerText =
-      "Updated " +
-      new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit"
-      });
 
-  }
+        if (!response.ok) {
+          throw new Error(
+            `API returned ${response.status}`
+          );
+        }
 
-  catch (error) {
 
-    console.error(error);
+        const data = await response.json();
 
-    document.getElementById("content").innerHTML = `
-      <div class="error">
-        Unable to load leaderboard.
-      </div>
-    `;
 
-    document.getElementById("status").innerText =
-      "Connection error";
-  }
+        if (!data || typeof data !== "object") {
+          throw new Error("Invalid API response");
+        }
 
-}
 
+        leaderboardData = data;
 
-/* =========================
-   CHANGE GAME
-========================= */
 
-function changeGame() {
+        renderCurrentView();
 
-  currentGame =
-    document.getElementById("gameSelect").value;
 
-  render();
-
-}
-
-
-/* =========================
-   MAIN RENDER
-========================= */
-
-function render() {
-
-  const data =
-    leaderboard[currentGame];
-
-  if (!data || data.length === 0) {
-
-    document.getElementById("content").innerHTML = `
-      <div class="loading">
-        No data available.
-      </div>
-    `;
-
-    return;
-  }
-
-
-  /*
-    RL + Brawlhalla
-    use bracket renderer
-  */
-
-  if (
-    currentGame === "Rocket League" ||
-    currentGame === "Brawlhalla"
-  ) {
-
-    renderBracket(data);
-
-    return;
-  }
-
-
-  /*
-    Everything else:
-    normal leaderboard
-  */
-
-  renderTable(data);
-
-}
-
-
-/* =========================
-   NORMAL TABLE
-========================= */
-
-function renderTable(data) {
-
-  let headerIndex = -1;
-
-
-  for (
-    let i = 0;
-    i < data.length;
-   for (let i = 0; i < data.length; i++) {
-
-  const row = data[i].map(x =>
-    String(x).trim().toLowerCase()
-  );
-
-  const nonEmpty = row.filter(x => x !== "");
-
-  const hasRank =
-    row.includes("rank") ||
-    row.includes("overall rank");
-
-  const hasPlayer =
-    row.includes("creator") ||
-    row.includes("player");
-
-  // Actual header row should contain multiple columns
-  if (
-    nonEmpty.length >= 2 &&
-    hasRank &&
-    hasPlayer
-  ) {
-    headerIndex = i;
-    break;
-  }
-}
-
-
-  if (headerIndex === -1) {
-
-    document.getElementById("content").innerHTML = `
-      <div class="error">
-        Could not detect table headers.
-      </div>
-    `;
-
-    return;
-  }
-
-
-  const headers =
-    data[headerIndex];
-
-
-  const rows =
-    data
-      .slice(headerIndex + 1)
-      .filter(row =>
-        row.some(cell =>
-          String(cell).trim() !== ""
-        )
-      );
-
-
-  let html = `
-
-    <div class="table-wrapper">
-
-      <table>
-
-        <thead>
-
-          <tr>
-  `;
-
-
-  headers.forEach(header => {
-
-    if (
-      String(header).trim() !== ""
-    ) {
-
-      html += `
-        <th>
-          ${escapeHtml(header)}
-        </th>
-      `;
-
-    }
-
-  });
-
-
-  html += `
-
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-  `;
-
-
-  rows.forEach(row => {
-
-    html += "<tr>";
-
-
-    for (
-      let i = 0;
-      i < headers.length;
-      i++
-    ) {
-
-      if (
-        String(headers[i]).trim() === ""
-      ) {
-        continue;
-      }
-
-
-      html += `
-
-        <td>
-          ${escapeHtml(row[i] ?? "")}
-        </td>
-
-      `;
-
-    }
-
-
-    html += "</tr>";
-
-  });
-
-
-  html += `
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-  `;
-
-
-  document.getElementById("content")
-    .innerHTML = html;
-
-}
-
-
-/* =========================
-   BRACKET RENDERER
-========================= */
-
-function renderBracket(data) {
-
-  /*
-    Expected structure:
-
-    Match | P1 | P2 | Win | Loss
-
-    QF1
-    QF2
-    QF3
-    QF4
-    SF1
-    SF2
-    FINALE 1
-    FINALE 2
-    FINALE 3
-  */
-
-
-  let headerIndex = -1;
-
-
-  for (
-    let i = 0;
-    i < data.length;
-    i++
-  ) {
-
-    const row =
-      data[i]
-        .map(x =>
-          String(x)
-            .trim()
-            .toLowerCase()
+        setStatus(
+          "Updated " +
+          new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit"
+          })
         );
 
 
-    if (
-      row.includes("match") &&
-      row.includes("p1") &&
-      row.includes("p2")
-    ) {
+      } catch (error) {
 
-      headerIndex = i;
+        console.error(
+          "Leaderboard loading error:",
+          error
+        );
 
-      break;
+
+        setStatus("Connection error");
+
+
+        document.getElementById("content").innerHTML = `
+          <div class="error">
+            Unable to load leaderboard.
+            <br><br>
+            Please refresh the page.
+          </div>
+        `;
+
+      }
+
     }
 
-  }
+
+    /* =====================================================
+       STATUS
+    ===================================================== */
+
+    function setStatus(text) {
+
+      const status =
+        document.getElementById("status");
+
+      if (status) {
+        status.textContent = text;
+      }
+
+    }
 
 
-  if (headerIndex === -1) {
+    /* =====================================================
+       RENDER CURRENT VIEW
+    ===================================================== */
 
-    document.getElementById("content").innerHTML = `
-      <div class="error">
-        Could not detect bracket headers.
-      </div>
-    `;
+    function renderCurrentView() {
 
-    return;
-  }
+      const content =
+        document.getElementById("content");
 
 
-  const headers =
-    data[headerIndex];
+      if (
+        !leaderboardData ||
+        Object.keys(leaderboardData).length === 0
+      ) {
+
+        content.innerHTML = `
+          <div class="loading">
+            No leaderboard data available.
+          </div>
+        `;
+
+        return;
+      }
 
 
-  const matchIndex =
-    headers.findIndex(
-      h =>
-        String(h)
-          .trim()
-          .toLowerCase() === "match"
-    );
+      /*
+        Overall is stored with lowercase sheet name.
+      */
+
+      if (currentView === "overall") {
+
+        renderTable("overall");
+
+        return;
+      }
 
 
-  const p1Index =
-    headers.findIndex(
-      h =>
-        String(h)
-          .trim()
-          .toLowerCase() === "p1"
-    );
+      /*
+        Rocket League and Brawlhalla
+        use bracket format.
+      */
+
+      if (currentView === "Rocket League") {
+
+        renderBracket("Rocket League");
+
+        return;
+      }
 
 
-  const p2Index =
-    headers.findIndex(
-      h =>
-        String(h)
-          .trim()
-          .toLowerCase() === "p2"
-    );
+      if (currentView === "Brawlhalla") {
+
+        renderBracket("Brawlhalla");
+
+        return;
+      }
 
 
-  const winIndex =
-    headers.findIndex(
-      h =>
-        String(h)
-          .trim()
-          .toLowerCase() === "win"
-    );
+      /*
+        Everything else uses normal tables.
+      */
+
+      renderTable(currentView);
+
+    }
 
 
-  const lossIndex =
-    headers.findIndex(
-      h =>
-        String(h)
-          .trim()
-          .toLowerCase() === "loss"
-    );
+    /* =====================================================
+       NORMAL TABLE RENDERER
+    ===================================================== */
+
+    function renderTable(sheetName) {
+
+      const data =
+        leaderboardData[sheetName];
 
 
-  const matches =
-    data
-      .slice(headerIndex + 1)
-      .filter(row =>
-        row.some(cell =>
-          String(cell).trim() !== ""
-        )
+      if (!data || !data.length) {
+
+        document.getElementById("content").innerHTML = `
+          <div class="error">
+            No data found for ${escapeHTML(sheetName)}.
+          </div>
+        `;
+
+        return;
+      }
+
+
+      /*
+        Find the REAL header row.
+
+        We intentionally do NOT assume
+        that headers are on a specific row.
+
+        Overall currently looks like:
+
+        Row 1: blank
+        Row 2: Overall Rank
+        Row 3: Overall Rank | Creator | Val Rank ...
+
+        So we detect the row containing
+        Rank + Creator/Player.
+      */
+
+      let headerIndex = -1;
+
+
+      for (
+        let i = 0;
+        i < data.length;
+        i++
+      ) {
+
+        const row =
+          data[i].map(value =>
+            String(value)
+              .trim()
+              .toLowerCase()
+          );
+
+
+        const nonEmpty =
+          row.filter(value =>
+            value !== ""
+          );
+
+
+        const hasRank =
+          row.includes("rank") ||
+          row.includes("overall rank");
+
+
+        const hasPlayer =
+          row.includes("creator") ||
+          row.includes("player");
+
+
+        if (
+          nonEmpty.length >= 2 &&
+          hasRank &&
+          hasPlayer
+        ) {
+
+          headerIndex = i;
+
+          break;
+        }
+
+      }
+
+
+      /*
+        If the first detection doesn't work,
+        try a more generic header detection.
+      */
+
+      if (headerIndex === -1) {
+
+        for (
+          let i = 0;
+          i < data.length;
+          i++
+        ) {
+
+          const row =
+            data[i].map(value =>
+              String(value)
+                .trim()
+                .toLowerCase()
+            );
+
+
+          const nonEmpty =
+            row.filter(value =>
+              value !== ""
+            );
+
+
+          if (
+            nonEmpty.length >= 2 &&
+            (
+              row.includes("rank") ||
+              row.includes("creator") ||
+              row.includes("player") ||
+              row.includes("total")
+            )
+          ) {
+
+            headerIndex = i;
+
+            break;
+          }
+
+        }
+
+      }
+
+
+      /*
+        Could not find headers.
+      */
+
+      if (headerIndex === -1) {
+
+        document.getElementById("content").innerHTML = `
+          <div class="error">
+            Could not detect table headers.
+          </div>
+        `;
+
+        return;
+      }
+
+
+      const headers =
+        data[headerIndex];
+
+
+      /*
+        Everything below header is data.
+
+        We don't sort it.
+        We don't calculate it.
+        We don't modify it.
+      */
+
+      const rows =
+        data
+          .slice(headerIndex + 1)
+          .filter(row =>
+            row.some(cell =>
+              String(cell).trim() !== ""
+            )
+          );
+
+
+      let html = `
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+
+              <tr>
+      `;
+
+
+      headers.forEach(header => {
+
+        html += `
+          <th>
+            ${escapeHTML(header)}
+          </th>
+        `;
+
+      });
+
+
+      html += `
+              </tr>
+
+            </thead>
+
+            <tbody>
+      `;
+
+
+      rows.forEach(row => {
+
+        html += "<tr>";
+
+
+        headers.forEach((_, index) => {
+
+          const value =
+            row[index] !== undefined
+              ? row[index]
+              : "";
+
+
+          html += `
+            <td>
+              ${escapeHTML(value)}
+            </td>
+          `;
+
+        });
+
+
+        html += "</tr>";
+
+      });
+
+
+      html += `
+            </tbody>
+
+          </table>
+
+        </div>
+      `;
+
+
+      document.getElementById("content")
+        .innerHTML = html;
+
+    }
+
+
+    /* =====================================================
+       BRACKET RENDERER
+    ===================================================== */
+
+    function renderBracket(sheetName) {
+
+      const data =
+        leaderboardData[sheetName];
+
+
+      if (!data || !data.length) {
+
+        document.getElementById("content").innerHTML = `
+          <div class="error">
+            No bracket data found.
+          </div>
+        `;
+
+        return;
+      }
+
+
+      /*
+        Find:
+
+        Match | P1 | P2 | Win | Loss
+      */
+
+      let headerIndex = -1;
+
+
+      for (
+        let i = 0;
+        i < data.length;
+        i++
+      ) {
+
+        const row =
+          data[i].map(value =>
+            String(value)
+              .trim()
+              .toLowerCase()
+          );
+
+
+        if (
+          row.includes("match") &&
+          row.includes("p1") &&
+          row.includes("p2") &&
+          row.includes("win") &&
+          row.includes("loss")
+        ) {
+
+          headerIndex = i;
+
+          break;
+        }
+
+      }
+
+
+      if (headerIndex === -1) {
+
+        document.getElementById("content").innerHTML = `
+          <div class="error">
+            Could not detect bracket headers.
+          </div>
+        `;
+
+        return;
+      }
+
+
+      /*
+        Data starts after header.
+      */
+
+      const rows =
+        data
+          .slice(headerIndex + 1)
+          .filter(row =>
+            row.some(cell =>
+              String(cell).trim() !== ""
+            )
+          );
+
+
+      /*
+        Separate rounds ONLY based on
+        the Match value.
+
+        No winner calculation.
+        No ranking.
+        No inference.
+      */
+
+      const quarterFinals =
+        rows.filter(row =>
+          String(row[0])
+            .trim()
+            .toUpperCase()
+            .startsWith("QF")
+        );
+
+
+      const semiFinals =
+        rows.filter(row =>
+          String(row[0])
+            .trim()
+            .toUpperCase()
+            .startsWith("SF")
+        );
+
+
+      const finals =
+        rows.filter(row =>
+          String(row[0])
+            .trim()
+            .toUpperCase()
+            .startsWith("FINALE")
+        );
+
+
+      let html = `
+        <div class="bracket">
+
+          ${renderBracketRound(
+            "Quarter Finals",
+            quarterFinals
+          )}
+
+          ${renderBracketRound(
+            "Semi Finals",
+            semiFinals
+          )}
+
+          ${renderBracketRound(
+            "Final — BO3",
+            finals
+          )}
+
+        </div>
+      `;
+
+
+      document.getElementById("content")
+        .innerHTML = html;
+
+    }
+
+
+    /* =====================================================
+       BRACKET ROUND
+    ===================================================== */
+
+    function renderBracketRound(
+      title,
+      rows
+    ) {
+
+      if (!rows.length) {
+        return "";
+      }
+
+
+      let html = `
+        <section class="round">
+
+          <h2>
+            ${escapeHTML(title)}
+          </h2>
+
+          <div class="match-grid">
+      `;
+
+
+      rows.forEach(row => {
+
+        /*
+          IMPORTANT:
+
+          We only display P1 and P2.
+
+          We DO NOT determine winner
+          from Win/Loss.
+
+          Sheet remains source of truth.
+        */
+
+        const match =
+          row[0] || "";
+
+        const p1 =
+          row[1] || "";
+
+        const p2 =
+          row[2] || "";
+
+
+        html += `
+          <div class="match-card">
+
+            <div class="match-title">
+              ${escapeHTML(match)}
+            </div>
+
+            <div class="player">
+              ${escapeHTML(p1)}
+            </div>
+
+            <div class="player">
+              ${escapeHTML(p2)}
+            </div>
+
+          </div>
+        `;
+
+      });
+
+
+      html += `
+          </div>
+
+        </section>
+      `;
+
+
+      return html;
+
+    }
+
+
+    /* =====================================================
+       HTML ESCAPE
+    ===================================================== */
+
+    function escapeHTML(value) {
+
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =====================================================
+       DROPDOWN
+    ===================================================== */
+
+    document
+      .getElementById("gameSelect")
+      .addEventListener(
+        "change",
+        function () {
+
+          currentView = this.value;
+
+          renderCurrentView();
+
+        }
       );
 
 
-  const quarterFinals =
-    matches.filter(row =>
-      /^QF/i.test(
-        String(row[matchIndex] ?? "")
-      )
+    /* =====================================================
+       INITIAL LOAD
+    ===================================================== */
+
+    loadLeaderboard();
+
+
+    /* =====================================================
+       AUTO REFRESH
+       Every 30 seconds
+    ===================================================== */
+
+    setInterval(
+      loadLeaderboard,
+      30000
     );
 
-
-  const semiFinals =
-    matches.filter(row =>
-      /^SF/i.test(
-        String(row[matchIndex] ?? "")
-      )
-    );
-
-
-  const finals =
-    matches.filter(row =>
-      /^FINALE/i.test(
-        String(row[matchIndex] ?? "")
-      )
-    );
-
-
-  let html = `
-    <div class="bracket">
-  `;
-
-
-  if (quarterFinals.length) {
-
-    html += renderRound(
-      "Quarter Finals",
-      quarterFinals
-    );
-
-  }
-
-
-  if (semiFinals.length) {
-
-    html += renderRound(
-      "Semi Finals",
-      semiFinals
-    );
-
-  }
-
-
-  if (finals.length) {
-
-    html += renderRound(
-      "Final — Best of 3",
-      finals,
-      true
-    );
-
-  }
-
-
-  html += `
-    </div>
-  `;
-
-
-  document.getElementById("content")
-    .innerHTML = html;
-
-
-  function renderRound(
-    title,
-    rows,
-    isFinal = false
-  ) {
-
-    let output = `
-
-      <div class="round ${isFinal ? "final" : ""}">
-
-        <div class="round-title">
-          ${title}
-        </div>
-    `;
-
-
-    rows.forEach(row => {
-
-      const match =
-        row[matchIndex] ?? "";
-
-      const p1 =
-        row[p1Index] ?? "";
-
-      const p2 =
-        row[p2Index] ?? "";
-
-      const win =
-        row[winIndex] ?? "";
-
-      const loss =
-        row[lossIndex] ?? "";
-
-
-      output += `
-
-        <div class="match">
-
-          <div class="match-name">
-            ${escapeHtml(match)}
-          </div>
-
-          <div class="player">
-            ${escapeHtml(p1)}
-          </div>
-
-          <div class="player">
-            ${escapeHtml(p2)}
-          </div>
-
-          <div class="result win">
-            ${escapeHtml(win)}
-          </div>
-
-          <div class="result loss">
-            ${escapeHtml(loss)}
-          </div>
-
-        </div>
-
-      `;
-
-    });
-
-
-    output += `
-      </div>
-    `;
-
-
-    return output;
-
-  }
-
-}
-
-
-/* =========================
-   SECURITY
-========================= */
-
-function escapeHtml(value) {
-
-  return String(value)
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-loadLeaderboard();
-
-
-/*
-  Refresh every 30 seconds
-*/
-
-setInterval(
-  loadLeaderboard,
-  30000
-);
-
-</script>
+  </script>
 
 </body>
-
 </html>
