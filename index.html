@@ -423,31 +423,32 @@ function renderTable(data) {
   for (
     let i = 0;
     i < data.length;
-    i++
+   for (let i = 0; i < data.length; i++) {
+
+  const row = data[i].map(x =>
+    String(x).trim().toLowerCase()
+  );
+
+  const nonEmpty = row.filter(x => x !== "");
+
+  const hasRank =
+    row.includes("rank") ||
+    row.includes("overall rank");
+
+  const hasPlayer =
+    row.includes("creator") ||
+    row.includes("player");
+
+  // Actual header row should contain multiple columns
+  if (
+    nonEmpty.length >= 2 &&
+    hasRank &&
+    hasPlayer
   ) {
-
-    const row =
-      data[i]
-        .map(x =>
-          String(x)
-            .trim()
-            .toLowerCase()
-        );
-
-
-    if (
-      row.includes("rank") ||
-      row.includes("overall rank") ||
-      row.includes("creator") ||
-      row.includes("player")
-    ) {
-
-      headerIndex = i;
-
-      break;
-    }
-
+    headerIndex = i;
+    break;
   }
+}
 
 
   if (headerIndex === -1) {
