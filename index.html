@@ -198,106 +198,83 @@
     .bracket-scroll { overflow-x:auto; padding-bottom:14px; scrollbar-width:thin; }
     .bracket-area { min-width:1120px; }
 
-    .bracket-section { margin-bottom:28px; }
+    .bracket-section {
+      margin-bottom:22px;
+      border:1px solid #27272a;
+      border-radius:10px;
+      background:rgba(10,10,12,.54);
+      padding:16px 16px 18px;
+    }
     .bracket-section:last-child { margin-bottom:0; }
 
     .zone-title {
       display:flex;
       align-items:center;
-      min-height:30px;
-      padding:0 12px;
-      margin-bottom:14px;
-      border-radius:6px;
-      background:#111113;
-      border:1px solid #27272a;
+      justify-content:center;
+      min-height:34px;
+      margin:0 0 18px;
       color:#f4f4f5;
-      font-size:10px;
+      font-size:11px;
       font-weight:900;
-      letter-spacing:1px;
+      letter-spacing:1.2px;
       text-transform:uppercase;
+      text-align:center;
+      border-bottom:1px solid #27272a;
+      padding-bottom:12px;
     }
 
     .bracket-grid {
       display:grid;
-      grid-template-columns: 220px 42px 220px 42px 220px 42px 220px;
-      gap:10px;
       align-items:start;
+      gap:34px;
     }
+
+    .upper-grid { grid-template-columns: 1fr 1fr 1fr; }
+    .lower-grid { grid-template-columns: 1fr 1fr 1fr 1fr; }
 
     .bracket-column { min-width:0; }
 
     .round-label {
-      color:#71717a;
-      font-size:9px;
+      color:#a1a1aa;
+      font-size:10px;
       font-weight:800;
       letter-spacing:.8px;
       text-transform:uppercase;
-      margin:0 0 8px 2px;
+      text-align:center;
+      margin:0 0 12px;
+      min-height:14px;
     }
 
-    .bracket-arrow {
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#a1a1aa;
-      font-size:26px;
-      line-height:1;
+    .round-subtitle {
+      color:#52525b;
+      font-size:9px;
+      font-weight:600;
+      text-align:center;
+      margin:-7px 0 10px;
     }
-
-    .upper-arrow-1 { padding-top:132px; }
-    .upper-arrow-2 { padding-top:186px; }
-    .upper-arrow-3 { padding-top:186px; }
-
-    .lower-arrow-1 { padding-top:132px; }
-    .lower-arrow-2 { padding-top:132px; }
-
-    .rank-arrow { padding-top:34px; }
 
     .match-stack { display:flex; flex-direction:column; }
-    .match-stack.qf { gap:12px; }
-    .match-stack.sf { padding-top:34px; gap:78px; }
-    .match-stack.uf { padding-top:88px; }
+    .match-stack.qf { gap:22px; }
+    .match-stack.sf { padding-top:48px; gap:88px; }
+    .match-stack.uf { padding-top:142px; }
 
-    .match-stack.lower-qf { gap:12px; }
-    .match-stack.lower-sf { padding-top:34px; gap:78px; }
-    .match-stack.lower-final { padding-top:88px; }
+    .match-stack.lower-qf { gap:22px; }
+    .match-stack.lower-sf { padding-top:48px; gap:88px; }
+    .match-stack.lower-final { padding-top:142px; }
 
-    .match-stack.ranking { gap:18px; }
-    .match-stack.ranking-final { padding-top:0; }
-
-    .placement-stack {
-      display:flex;
-      flex-direction:column;
-      gap:78px;
-      padding-top:88px;
-    }
-
-    .placement-box {
-      min-height:60px;
-      padding:12px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      background:rgba(17,17,19,.96);
-      border:1px solid #303036;
-      border-radius:8px;
-      color:#f4f4f5;
-      font-size:13px;
-      font-weight:800;
-    }
+    .match-stack.ranking { gap:0; }
 
     .match-card {
       background:rgba(17,17,19,.97);
       border:1px solid #303036;
-      border-radius:7px;
+      border-radius:8px;
       overflow:hidden;
       box-shadow:0 6px 18px rgba(0,0,0,.16);
     }
 
     .match-title {
-      min-height:28px;
-      padding:6px 9px;
+      min-height:29px;
+      padding:7px 10px;
       background:#18181b;
       color:#a1a1aa;
       font-size:9px;
@@ -318,8 +295,8 @@
     }
 
     .player {
-      min-height:34px;
-      padding:8px 9px;
+      min-height:36px;
+      padding:8px 10px;
       font-size:12px;
       border-bottom:1px solid #27272a;
       display:flex;
@@ -348,38 +325,129 @@
 
     .empty-player { color:#52525b; }
 
+    .ranking-grid {
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:16px;
+    }
+
+    .ranking-card {
+      border:1px solid #303036;
+      border-radius:9px;
+      background:rgba(17,17,19,.94);
+      overflow:hidden;
+    }
+
+    .ranking-card-head {
+      min-height:48px;
+      padding:10px 12px;
+      border-bottom:1px solid #27272a;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .ranking-card-title {
+      color:#f4f4f5;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.7px;
+      text-transform:uppercase;
+    }
+
+    .rank-badge {
+      padding:3px 7px;
+      border-radius:5px;
+      background:#18181b;
+      border:1px solid #303036;
+      color:#d4d4d8;
+      font-size:8px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .ranking-card .match-card {
+      border:0;
+      border-radius:0;
+      box-shadow:none;
+    }
+
+    .ranking-card .placement-summary {
+      border-top:1px solid #27272a;
+      padding:10px 12px;
+      display:grid;
+      gap:5px;
+      font-size:9px;
+      color:#71717a;
+    }
+
+    .placement-summary span {
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .placement-summary strong { color:#f4f4f5; }
+
     .challenge-wrap {
       display:grid;
-      grid-template-columns:220px 42px 220px 1fr;
-      gap:10px;
+      grid-template-columns:minmax(300px, 520px) minmax(300px, 1fr);
+      gap:24px;
       align-items:start;
     }
 
-    .challenge-note {
-      min-height:76px;
-      padding:12px 14px;
+    .challenge-card {
       border:1px solid #303036;
-      border-radius:8px;
-      background:rgba(17,17,19,.9);
+      border-radius:9px;
+      background:rgba(17,17,19,.94);
+      overflow:hidden;
+    }
+
+    .challenge-meta {
+      padding:12px 14px;
+      border-bottom:1px solid #27272a;
+    }
+
+    .challenge-meta-title {
+      color:#f4f4f5;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.7px;
+      text-transform:uppercase;
+    }
+
+    .challenge-meta-sub {
+      margin-top:6px;
+      color:#71717a;
+      font-size:10px;
+    }
+
+    .challenge-note {
+      min-height:100%;
+      padding:14px 16px;
+      border:1px solid #303036;
+      border-radius:9px;
+      background:rgba(17,17,19,.82);
       color:#a1a1aa;
       font-size:11px;
-      line-height:1.5;
+      line-height:1.55;
     }
 
     .challenge-note strong { color:#f4f4f5; }
 
     .final-ranklist {
-      min-height:76px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      margin-top:12px;
+      padding:12px 14px;
       border:1px solid #303036;
       border-radius:8px;
-      background:rgba(17,17,19,.96);
+      background:#18181b;
       color:#f4f4f5;
-      font-size:13px;
+      font-size:11px;
       font-weight:800;
       text-align:center;
+      text-transform:uppercase;
+      letter-spacing:.7px;
     }
 
     /* MOBILE */
@@ -748,35 +816,28 @@
       /*
         FINAL WEBSITE BRACKET — Brawlhalla + Rocket League
 
-        Upper Bracket:
-        M1  A vs B
-        M2  C vs D
-        M3  E vs F
-        M4  G vs H
-        M5  M1 Winner vs M2 Winner
-        M6  M3 Winner vs M4 Winner
-        M7  M5 Winner vs M6 Winner
+        Upper: M1-M7
+        Lower: M8-M13
+        Ranking: M14-M17
+        Challenge: M18
 
-        Lower Bracket:
-        M8  M1 Loser vs M2 Loser
-        M9  M3 Loser vs M4 Loser
-        M10 M5 Loser vs M8 Winner
-        M11 M6 Loser vs M9 Winner
-        M12 M10 Winner vs M11 Winner
-        M13 M7 Loser vs M12 Winner
-
-        Ranking Bracket:
-        M14 M8 Loser vs M9 Loser       -> #7 / #8
-        M15 M10 Loser vs M11 Loser     -> #5 / #6
-        M16 M12 Loser vs M13 Loser     -> #3 / #4
-        M17 M7 Winner vs M13 Winner    -> #1 / #2
-
-        Challenge Bracket:
-        M18 Bye Player vs Selected Player -> Final Ranklist
-
-        The website does not calculate progression, ranks or winners.
-        It only displays the P1/P2/Win values already present in Sheet.
+        The website is read-only. P1/P2/Win values come directly from the Sheet.
+        No progression, ranking, sorting or winner calculation is performed here.
       */
+
+      const rankingCard = (match, title, badge, winnerRank, loserRank) => `
+        <div class="ranking-card">
+          <div class="ranking-card-head">
+            <div class="ranking-card-title">${title}</div>
+            <div class="rank-badge">${badge}</div>
+          </div>
+          ${card(match)}
+          <div class="placement-summary">
+            <span><span>${winnerRank ? 'Winner' : ''}</span><strong>${winnerRank || ''}</strong></span>
+            <span><span>${loserRank ? 'Runner-up' : ''}</span><strong>${loserRank || ''}</strong></span>
+          </div>
+        </div>
+      `;
 
       const html = `
         <div class="bracket-page">
@@ -785,7 +846,7 @@
           <div class="bracket-heading">
             <div>
               <h2>${escapeHTML(sheetName)} Bracket</h2>
-              <p>16-player placement + ranking bracket</p>
+              <p>Placement + ranking bracket</p>
             </div>
           </div>
 
@@ -793,11 +854,10 @@
             <div class="bracket-area">
 
               <section class="bracket-section">
-                <div class="zone-title">Upper Bracket</div>
-                <div class="bracket-grid">
-
+                <div class="zone-title">● &nbsp; Upper Bracket (Winners) <span style="color:#71717a;font-weight:600;margin-left:8px;text-transform:none;letter-spacing:0;">(Matches M1 – M7)</span></div>
+                <div class="bracket-grid upper-grid">
                   <div class="bracket-column">
-                    <div class="round-label">Round 1</div>
+                    <div class="round-label">Round 1 • Quarterfinals</div>
                     <div class="match-stack qf">
                       ${card(matches.M1)}
                       ${card(matches.M2)}
@@ -806,125 +866,84 @@
                     </div>
                   </div>
 
-                  <div class="bracket-arrow upper-arrow-1">→</div>
-
                   <div class="bracket-column">
-                    <div class="round-label">Upper Semifinal</div>
+                    <div class="round-label">Round 2 • Semifinals</div>
                     <div class="match-stack sf">
                       ${card(matches.M5)}
                       ${card(matches.M6)}
                     </div>
                   </div>
 
-                  <div class="bracket-arrow upper-arrow-2">→</div>
-
                   <div class="bracket-column">
-                    <div class="round-label">Upper Final</div>
+                    <div class="round-label">Round 3 • Upper Final</div>
                     <div class="match-stack uf">
                       ${card(matches.M7)}
                     </div>
                   </div>
-
-                  <div class="bracket-arrow upper-arrow-3">→</div>
-
-                  <div class="bracket-column">
-                    <div class="round-label">Final Placement</div>
-                    <div class="placement-stack">
-                      <div class="placement-box">#1 &amp; #2</div>
-                    </div>
-                  </div>
-
                 </div>
               </section>
 
               <section class="bracket-section">
-                <div class="zone-title">Lower Bracket</div>
-                <div class="bracket-grid">
-
+                <div class="zone-title">● &nbsp; Lower Bracket (Losers) <span style="color:#71717a;font-weight:600;margin-left:8px;text-transform:none;letter-spacing:0;">(Matches M8 – M13)</span></div>
+                <div class="bracket-grid lower-grid">
                   <div class="bracket-column">
-                    <div class="round-label">Lower Round 1</div>
+                    <div class="round-label">Losers Round 1</div>
                     <div class="match-stack lower-qf">
                       ${card(matches.M8)}
                       ${card(matches.M9)}
                     </div>
                   </div>
 
-                  <div class="bracket-arrow lower-arrow-1">→</div>
-
                   <div class="bracket-column">
-                    <div class="round-label">Lower Round 2</div>
+                    <div class="round-label">Losers Round 2</div>
                     <div class="match-stack lower-sf">
                       ${card(matches.M10)}
                       ${card(matches.M11)}
                     </div>
                   </div>
 
-                  <div class="bracket-arrow lower-arrow-2">→</div>
-
                   <div class="bracket-column">
-                    <div class="round-label">Lower Final</div>
+                    <div class="round-label">Losers Semifinal</div>
                     <div class="match-stack lower-final">
                       ${card(matches.M12)}
                     </div>
                   </div>
 
-                  <div class="bracket-arrow lower-arrow-2">→</div>
-
                   <div class="bracket-column">
-                    <div class="round-label">Ranking Entry</div>
+                    <div class="round-label">Losers Final</div>
                     <div class="match-stack lower-final">
                       ${card(matches.M13)}
                     </div>
                   </div>
-
                 </div>
               </section>
 
               <section class="bracket-section">
-                <div class="zone-title">Ranking Bracket</div>
-                <div class="bracket-grid">
-
-                  <div class="bracket-column">
-                    <div class="round-label">Placement Matches</div>
-                    <div class="match-stack ranking">
-                      ${card(matches.M14)}
-                      ${card(matches.M15)}
-                      ${card(matches.M16)}
-                      ${card(matches.M17)}
-                    </div>
-                  </div>
-
-                  <div class="bracket-arrow rank-arrow">→</div>
-
-                  <div class="bracket-column">
-                    <div class="round-label">Final Positions</div>
-                    <div class="match-stack ranking">
-                      <div class="placement-box">#7 &amp; #8</div>
-                      <div class="placement-box">#5 &amp; #6</div>
-                      <div class="placement-box">#3 &amp; #4</div>
-                      <div class="placement-box">#1 &amp; #2</div>
-                    </div>
-                  </div>
-
-                  <div></div><div></div><div></div><div></div>
+                <div class="zone-title">● &nbsp; Ranking Bracket (Placement Classification) <span style="color:#71717a;font-weight:600;margin-left:8px;text-transform:none;letter-spacing:0;">(Matches M14 – M17)</span></div>
+                <div class="ranking-grid">
+                  ${rankingCard(matches.M17, 'Grand Final', '#1 & #2', '#1', '#2')}
+                  ${rankingCard(matches.M16, 'Bronze Match', '#3 & #4', '#3', '#4')}
+                  ${rankingCard(matches.M15, '5th / 6th Match', '#5 & #6', '#5', '#6')}
+                  ${rankingCard(matches.M14, '7th / 8th Match', '#7 & #8', '#7', '#8')}
                 </div>
               </section>
 
               <section class="bracket-section">
-                <div class="zone-title">Challenge Bracket</div>
+                <div class="zone-title">● &nbsp; Challenger Bracket <span style="color:#71717a;font-weight:600;margin-left:8px;text-transform:none;letter-spacing:0;">(Match M18 • Best of 3)</span></div>
                 <div class="challenge-wrap">
-                  <div class="bracket-column">
-                    <div class="round-label">Challenge Match</div>
-                    ${card(matches.M18, "BO5")}
+                  <div class="challenge-card">
+                    <div class="challenge-meta">
+                      <div class="challenge-meta-title">Match 18 (BO3)</div>
+                      <div class="challenge-meta-sub">Challenger vs Seed</div>
+                    </div>
+                    ${card(matches.M18, 'BO3')}
+                    <div class="final-ranklist">Final Ranklist</div>
                   </div>
-
-                  <div class="bracket-arrow rank-arrow">→</div>
-
-                  <div class="final-ranklist">FINAL<br>RANKLIST</div>
 
                   <div class="challenge-note">
-                    <strong>Note:</strong> If the bye player wins, the selected player's rank drops to the last position, i.e. #4.<br><br>
-                    If the selected player wins, the bye player's position is replaced by the selected player.
+                    <strong>Challenge Match</strong><br><br>
+                    Bye player vs selected player. The Sheet remains the source of truth for the players and result.<br><br>
+                    <strong>Note:</strong> Challenge outcome affects the final ranklist according to the tournament rule set.
                   </div>
                 </div>
               </section>
